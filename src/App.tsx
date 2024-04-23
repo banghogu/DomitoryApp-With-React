@@ -1,30 +1,43 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import HotelList from './pages/HotelList';
+import HotelPage from './pages/HotelPage';
+import useLoadKakao from './hook/useLoadKakao';
+import My from './pages/My';
+import Signin from './pages/Signin';
+import AuthGuard from './components/auth/AuthGuard';
+import Navbar from './components/shared/Navbar';
+import Like from './pages/Like';
+import PrivateRoute from './components/auth/PrivateRoute';
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  useLoadKakao();
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <BrowserRouter>
+      <AuthGuard>
+        <Navbar />
+        <Routes>
+          <Route path="/" Component={HotelList} />
+          <Route path="/hotel/:id" Component={HotelPage} />
+          <Route path="/signin" Component={Signin} />
+          <Route
+            path="/my"
+            element={
+              <PrivateRoute>
+                <My />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/like"
+            element={
+              <PrivateRoute>
+                <Like />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </AuthGuard>
+    </BrowserRouter>
   );
 }
 
