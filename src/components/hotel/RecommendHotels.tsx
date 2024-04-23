@@ -8,6 +8,7 @@ import addDelimiter from '@/utils/addDel';
 import Button from '../shared/Button';
 import { css } from '@emotion/react';
 import { useState } from 'react';
+import { colors } from '@/styles/colorPalette';
 
 const RecommendHotels = ({ recommendHotels }: { recommendHotels: string[] }) => {
   const [showMore, setShowMore] = useState(false);
@@ -49,6 +50,7 @@ const RecommendHotels = ({ recommendHotels }: { recommendHotels: string[] }) => 
             onClick={() => {
               setShowMore(true);
             }}
+            css={buttonStyles}
           >
             더보기
           </Button>
@@ -62,6 +64,17 @@ const imageStyles = css`
   height: 80px;
   object-fit: cover;
   border-radius: 4px;
+`;
+
+const buttonStyles = css`
+  border-radius: 6px;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+  &:hover {
+    background-color: ${colors.blue};
+    color: ${colors.white};
+  }
 `;
 
 export default RecommendHotels;
