@@ -17,7 +17,7 @@ export interface Hotel {
     };
   };
   recommendHotels: string[];
-  //   forms: ReservationForm[];
+  forms: ReservationForm[];
 }
 
 interface BaseForm {

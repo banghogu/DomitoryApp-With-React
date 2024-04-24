@@ -8,12 +8,18 @@ import AuthGuard from './components/auth/AuthGuard';
 import Navbar from './components/shared/Navbar';
 import Like from './pages/Like';
 import PrivateRoute from './components/auth/PrivateRoute';
+import Schedule from './pages/Schedule';
+import ScrollToTop from './components/shared/ScrollToTop';
+import ReservationDone from './pages/ReservationDone';
+import ReservationPage from './pages/Reservation';
+import ReservationList from './pages/ReservationList';
 
 function App() {
   useLoadKakao();
   return (
     <BrowserRouter>
       <AuthGuard>
+        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/" Component={HotelList} />
@@ -32,6 +38,38 @@ function App() {
             element={
               <PrivateRoute>
                 <Like />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/schedule"
+            element={
+              <PrivateRoute>
+                <Schedule />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reservation"
+            element={
+              <PrivateRoute>
+                <ReservationPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reservation/done"
+            element={
+              <PrivateRoute>
+                <ReservationDone />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reservation/list"
+            element={
+              <PrivateRoute>
+                <ReservationList />
               </PrivateRoute>
             }
           />

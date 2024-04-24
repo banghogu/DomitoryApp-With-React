@@ -15,9 +15,17 @@ import { store } from '@/remote/firebase';
 import { COLLECTIONS } from '@/constants';
 import { Room } from '@/model/room';
 import addDelimiter from '@/utils/addDel';
+import qs from 'qs';
+import { useAppSelector } from '@/hooks/useUser';
+import { RootState } from '@/store';
+import { useNavigate } from 'react-router-dom';
+import { useAlertContext } from '@/contexts/AlertContext';
 
 const Rooms = ({ hotelId }: { hotelId: string }) => {
+  const { open } = useAlertContext();
   const client = useQueryClient();
+  const navigate = useNavigate();
+  const { user } = useAppSelector((state: RootState) => state.userSlice);
   const { data } = useQuery(['rooms', hotelId], () => getRooms(hotelId), {});
 
   useEffect(() => {
@@ -50,6 +58,15 @@ const Rooms = ({ hotelId }: { hotelId: string }) => {
       </Header>
       <ul>
         {data?.map((room) => {
+          const params = qs.stringify(
+            {
+              roomId: room.id,
+              hotelId: hotelId,
+            },
+            {
+              addQueryPrefix: true,
+            }
+          );
           const 마감임박인가 = room.avaliableCount === 1;
           const 매진인가 = room.avaliableCount === 0;
           return (
@@ -84,21 +101,20 @@ const Rooms = ({ hotelId }: { hotelId: string }) => {
                 <Button
                   size="medium"
                   disabled={매진인가}
-                  //   onClick={() => {
-                  //     if (user == null) {
-                  //       // 로그인전
-                  //       open({
-                  //         title: '로그인이 필요한 기능입니다',
-                  //         onButtonClick: () => {
-                  //           navigate('/signin');
-                  //         },
-                  //       });
+                  onClick={() => {
+                    if (user == null) {
+                      open({
+                        title: '로그인이 필요한 기능입니다',
+                        onButtonClick: () => {
+                          navigate('/signin');
+                        },
+                      });
 
-                  //       return;
-                  //     }
+                      return;
+                    }
 
-                  //     navigate(`/schedule${params}`);
-                  //   }}
+                    navigate(`/schedule${params}`);
+                  }}
                 >
                   {매진인가 === true ? '매진' : '선택'}
                 </Button>
