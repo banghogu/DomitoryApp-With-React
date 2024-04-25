@@ -6,8 +6,11 @@ import Map from '@/components/hotel/Map';
 import RecommendHotels from '@/components/hotel/RecommendHotels';
 import Review from '@/components/hotel/Review';
 import Rooms from '@/components/hotel/Rooms';
+import SEO from '@/components/shared/SEO';
+import ScrollProgressBar from '@/components/shared/ScrollProgressBar';
 import Top from '@/components/shared/Top';
 import { getHotel } from '@/remote/hotel';
+import { css } from '@emotion/react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
@@ -24,6 +27,8 @@ const HotelPage = () => {
 
   return (
     <div>
+      <SEO title={name} description={comment} image={images[0]} />
+      <ScrollProgressBar style={scrollProgressBarStyles} />
       <Top title={name} subTitle={comment} />
       <Carousel images={images} />
       <ActionButtons hotel={data} />
@@ -35,5 +40,11 @@ const HotelPage = () => {
     </div>
   );
 };
+
+const scrollProgressBarStyles = css`
+  position: sticky;
+  top: 64px;
+  z-index: 2;
+`;
 
 export default HotelPage;
