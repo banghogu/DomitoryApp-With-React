@@ -28,7 +28,6 @@ function SigninPage() {
           Google 로그인
         </Flex>
       </Button>
-      <Button onClick={signout}>로그아웃</Button>
     </Flex>
   );
 }
