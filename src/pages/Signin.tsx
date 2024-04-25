@@ -4,7 +4,7 @@ import Spacing from '@/components/shared/Spacing';
 import useGoogleSignin from '@/hook/useGoogleSignin';
 
 function SigninPage() {
-  const { signin, signout } = useGoogleSignin();
+  const { signin } = useGoogleSignin();
 
   return (
     <Flex direction="column" align="center" style={{ padding: 24 }}>
